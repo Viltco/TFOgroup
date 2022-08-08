@@ -1,0 +1,53 @@
+<odoo>
+    <record id="unique_product_form_inherited" model="ir.ui.view">
+        <field name="name">product.product.inherited</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="gnc_code"/>
+                <field name="unique_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="unique_product_tree_inherited" model="ir.ui.view">
+        <field name="name">product.product.inherited</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='standard_price']" position="after">
+                <field name="gnc_code"/>
+                <field name="unique_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="unique_product__template_form_inherited" model="ir.ui.view">
+        <field name="name">product.template.inherited</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="model">product.template</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="gnc_code"/>
+                <field name="unique_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="unique_product__template_tree_inherited" model="ir.ui.view">
+        <field name="name">product.template.inherited</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="model">product.template</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='standard_price']" position="after">
+                <field name="gnc_code"/>
+                <field name="unique_code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
