@@ -6,8 +6,8 @@
         <field name="priority">100</field>
         <field type="xml" name="arch">
             <xpath expr="//field[@name='barcode']" position="after">
-                <field name="gnc_code"/>
-                <field name="unique_code"/>
+                <field name="unique_code_1"/>
+                <field name="unique_code_2"/>
             </xpath>
         </field>
     </record>
@@ -19,8 +19,8 @@
         <field name="priority">100</field>
         <field type="xml" name="arch">
             <xpath expr="//field[@name='standard_price']" position="after">
-                <field name="gnc_code"/>
-                <field name="unique_code"/>
+                <field name="unique_code_1"/>
+                <field name="unique_code_2"/>
             </xpath>
         </field>
     </record>
@@ -32,8 +32,8 @@
         <field name="priority">100</field>
         <field type="xml" name="arch">
             <xpath expr="//field[@name='barcode']" position="after">
-                <field name="gnc_code"/>
-                <field name="unique_code"/>
+                <field name="unique_code_1"/>
+                <field name="unique_code_2"/>
             </xpath>
         </field>
     </record>
@@ -45,8 +45,8 @@
         <field name="priority">100</field>
         <field type="xml" name="arch">
             <xpath expr="//field[@name='standard_price']" position="after">
-                <field name="gnc_code"/>
-                <field name="unique_code"/>
+                <field name="unique_code_1"/>
+                <field name="unique_code_2"/>
             </xpath>
         </field>
     </record>

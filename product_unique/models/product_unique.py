@@ -4,20 +4,20 @@ from odoo import api, fields, models , _
 class InheritProductUnique(models.Model):
     _inherit = "product.product"
 
-    gnc_code = fields.Integer(string='GNC Code')
-    unique_code = fields.Integer(string='Unique Code')
+    unique_code_1 = fields.Char(string='Unique Code 1')
+    unique_code_2 = fields.Char(string='Unique Code 2')
 
     _sql_constraints = [
-        ('gnc_code_unique', 'unique(gnc_code)', 'This GNC Code is already existed'),
-        ('unique_code_unique', 'unique(unique_code)', 'This Unique Code is already existed')]
+        ('unique_code_1_unique', 'unique(unique_code_1)', 'Cant be duplicate value For Unique Code 1!'),
+        ('unique_code_2_unique', 'unique(unique_code_2)', 'Cant be duplicate value For Unique Code 2!')]
 
 
 class InheritProductUniqueTempalte(models.Model):
     _inherit = "product.template"
 
-    gnc_code = fields.Integer(string='GNC Code')
-    unique_code = fields.Integer(string='Unique Code')
+    unique_code_1 = fields.Char(string='Unique Code 1')
+    unique_code_2 = fields.Char(string='Unique Code 2')
 
     _sql_constraints = [
-        ('gnc_code_unique', 'unique(gnc_code)', 'This GNC Code is already existed'),
-        ('unique_code_unique', 'unique(unique_code)', 'This Unique Code is already existed')]
+        ('unique_code_1_unique', 'unique(unique_code_1)', 'Cant be duplicate value For Unique Code 1!'),
+        ('unique_code_2_unique', 'unique(unique_code_2)', 'Cant be duplicate value For Unique Code 2!')]
