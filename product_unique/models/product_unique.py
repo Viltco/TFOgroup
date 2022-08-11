@@ -5,8 +5,8 @@ from odoo.exceptions import UserError
 class ProductTemplateInh(models.Model):
     _inherit = "product.template"
 
-    gnc_code = fields.Integer(string='GNC Code')
-    unique_code = fields.Integer(string='Unique Code')
+    gnc_code = fields.Char(string='GNC Code')
+    unique_code = fields.Char(string='Unique Code')
 
     @api.constrains('gnc_code')
     def remove_duplication_gnc(self):
