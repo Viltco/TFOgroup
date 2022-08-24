@@ -3,6 +3,9 @@
 from odoo import models, fields, api
 import odoo.addons.decimal_precision as dp
 
+from odoo.exceptions import UserError
+
+
 class MaterialPurchaseRequisitionLine(models.Model):
     _name = "material.purchase.requisition.line"
     _description = 'Material Purchase Requisition Lines'
@@ -47,7 +50,7 @@ class MaterialPurchaseRequisitionLine(models.Model):
                     ('purchase','Purchase Order'),
         ],
         string='Requisition Action',
-        default='purchase',
+        default='internal',
         required=True,
     )
     @api.onchange('product_id')
@@ -56,4 +59,10 @@ class MaterialPurchaseRequisitionLine(models.Model):
             rec.description = rec.product_id.name
             rec.uom = rec.product_id.uom_id.id
 
+    # def write(self, vals):
+    #     if self.requisition_id.state == 'dept_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_department'):
+    #         raise UserError('You cannot Edit this document in this state.')
+    #     if self.requisition_id.state == 'ir_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_user'):
+    #         raise UserError('You cannot Edit this document in this state.')
+    #     return super(MaterialPurchaseRequisitionLine, self).write(vals)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

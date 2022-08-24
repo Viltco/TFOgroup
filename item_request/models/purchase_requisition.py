@@ -178,6 +178,14 @@ class MaterialPurchaseRequisition(models.Model):
         string='Picking Type',
         copy=False,
     )
+
+    # def write(self, vals):
+    #     if self.state == 'ir_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_department'):
+    #     # if self.state == 'dept_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_department'):
+    #         raise UserError('You cannot Edit this document in this state...')
+    #     if self.state == 'dept_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_user'):
+    #         raise UserError('You cannot Edit this document in this state.')
+    #     return super(MaterialPurchaseRequisition, self).write(vals)
     
     @api.model
     def create(self, vals):
