@@ -8,11 +8,9 @@ from odoo.exceptions import Warning, UserError
 class MaterialPurchaseRequisition(models.Model):
     _name = 'material.purchase.requisition'
     _description = 'Item Request'
-    #_inherit = ['mail.thread', 'ir.needaction_mixin']
     _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']      # odoo11
     _order = 'id desc'
     
-    #@api.multi
     def unlink(self):
         for rec in self:
             if rec.state not in ('draft', 'cancel', 'reject'):

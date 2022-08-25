@@ -177,7 +177,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         
-        <menuitem id="menu_purchase_requisition" name="Item Requests" groups="item_request.group_purchase_requisition_user,item_request.group_purchase_requisition_manager,item_request.group_purchase_requisition_department"/>
+        <menuitem id="menu_purchase_requisition" name="Item Requests" groups="item_request.group_purchase_requisition_user,item_request.group_purchase_requisition_manager,item_request.group_purchase_requisition_department" web_icon="item_request,static/logo.png"/>
         <menuitem id="menu_item_purchase_requisition" name="Item Request" parent="menu_purchase_requisition"/>
         <menuitem id="menu_action_purchase_requisition" name="Item Request" parent="menu_item_purchase_requisition" action="action_material_purchase_requisition"/>
         
