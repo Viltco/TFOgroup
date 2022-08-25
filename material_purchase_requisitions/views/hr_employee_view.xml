@@ -10,7 +10,8 @@
                      <page name="purchase_settings" string="Purchase Requisition Settings">
                         <group>
                             <group>
-                                <field name="dest_location_id" options="{'no_quick_create': True, 'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
+                                <field name="dest_location_id"/>
+                                <field name="is_responsible"/>
                             </group>
                         </group>
                      </page>
