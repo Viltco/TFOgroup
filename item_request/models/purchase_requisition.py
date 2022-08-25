@@ -4,9 +4,10 @@ from odoo import models, fields, api, _
 from datetime import datetime, date
 from odoo.exceptions import Warning, UserError
 
+
 class MaterialPurchaseRequisition(models.Model):
     _name = 'material.purchase.requisition'
-    _description = 'Purchase Requisition'
+    _description = 'Item Request'
     #_inherit = ['mail.thread', 'ir.needaction_mixin']
     _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']      # odoo11
     _order = 'id desc'
@@ -29,7 +30,7 @@ class MaterialPurchaseRequisition(models.Model):
         ('ir_approve', 'WAITING ACCOUNTS APPROVAL'),
         ('approve', 'Approved'),
         ('stock', 'TRANSFER/PO CREATED'),
-        ('receive', 'Received'),
+        # ('receive', 'Received'),
         ('cancel', 'Cancelled'),
         ('reject', 'Rejected')],
         default='draft',
@@ -124,11 +125,11 @@ class MaterialPurchaseRequisition(models.Model):
         readonly=True,
         copy=False,
     )
-    receive_date = fields.Date(
-        string='Received Date',
-        readonly=True,
-        copy=False,
-    )
+    # receive_date = fields.Date(
+    #     string='Received Date',
+    #     readonly=True,
+    #     copy=False,
+    # )
     reason = fields.Text(
         string='Reason for Requisitions',
         required=False,
@@ -179,13 +180,18 @@ class MaterialPurchaseRequisition(models.Model):
         copy=False,
     )
 
-    # def write(self, vals):
-    #     if self.state == 'ir_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_department'):
-    #     # if self.state == 'dept_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_department'):
-    #         raise UserError('You cannot Edit this document in this state...')
-    #     if self.state == 'dept_confirm' and not self.env.user.has_group('item_request.group_purchase_requisition_user'):
-    #         raise UserError('You cannot Edit this document in this state.')
-    #     return super(MaterialPurchaseRequisition, self).write(vals)
+    is_employee = fields.Boolean()
+    is_manager = fields.Boolean()
+    is_account = fields.Boolean()
+
+    def write(self, vals):
+        if self.is_employee and self.env.user.has_group('item_request.group_purchase_requisition_manager'):
+            raise UserError('You cannot Edit this document in this state.')
+        if self.is_manager and self.env.user.has_group('item_request.group_purchase_requisition_department'):
+            raise UserError('You cannot Edit this document in this state.')
+        if self.is_account and self.env.user.has_group('item_request.group_purchase_requisition_user') and self.state not in ['approve', 'stock']:
+            raise UserError('You cannot Edit this document in this state.')
+        return super(MaterialPurchaseRequisition, self).write(vals)
     
     @api.model
     def create(self, vals):
@@ -203,6 +209,7 @@ class MaterialPurchaseRequisition(models.Model):
             rec.employee_confirm_id = rec.employee_id.id
             rec.confirm_date = fields.Date.today()
             rec.state = 'dept_confirm'
+            rec.is_employee = True
             # if manager_mail_template:
             #     manager_mail_template.send_mail(self.id)
             
@@ -218,11 +225,12 @@ class MaterialPurchaseRequisition(models.Model):
         for rec in self:
             rec.managerapp_date = fields.Date.today()
             rec.approve_manager_id = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
-            employee_mail_template = self.env.ref('item_request.email_purchase_requisition_iruser_custom')
-            email_iruser_template = self.env.ref('item_request.email_purchase_requisition')
+            # employee_mail_template = self.env.ref('item_request.email_purchase_requisition_iruser_custom')
+            # email_iruser_template = self.env.ref('item_request.email_purchase_requisition')
             # employee_mail_template.sudo().send_mail(self.id)
             # email_iruser_template.sudo().send_mail(self.id)
             rec.state = 'ir_approve'
+            rec.is_manager = True
 
     #@api.multi
     def user_approve(self):
@@ -230,6 +238,7 @@ class MaterialPurchaseRequisition(models.Model):
             rec.userrapp_date = fields.Date.today()
             rec.approve_employee_id = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
             rec.state = 'approve'
+            rec.is_account = True
 
     #@api.multi
     def reset_draft(self):

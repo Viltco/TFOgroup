@@ -53,6 +53,7 @@ class MaterialPurchaseRequisitionLine(models.Model):
         default='internal',
         required=True,
     )
+
     @api.onchange('product_id')
     def onchange_product_id(self):
         for rec in self:
